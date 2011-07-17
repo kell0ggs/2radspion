@@ -1,0 +1,29 @@
+<label for="hersteller">
+	<f:translate key="tx_zweiradspion_domain_model_fahrrad.hersteller" /> <span class="required">(required)</span>
+</label><br />
+<f:form.textbox property="hersteller" /><br />
+
+<label for="name">
+	<f:translate key="tx_zweiradspion_domain_model_fahrrad.name" /> <span class="required">(required)</span>
+</label><br />
+<f:form.textbox property="name" /><br />
+
+<label for="preis">
+	<f:translate key="tx_zweiradspion_domain_model_fahrrad.preis" /> <span class="required">(required)</span>
+</label><br />
+<f:form.textbox property="preis" /><br />
+
+<label for="bild">
+	<f:translate key="tx_zweiradspion_domain_model_fahrrad.bild" />
+</label><br />
+<zweirad:hasImage img="{fahrrad.bild}">
+    <f:then>
+        <f:image src="uploads/tx_zweiradspion/{fahrrad.bild}" width="510" alt="{fahrrad.name}" />
+    </f:then>
+</zweirad:hasImage>
+<f:form.upload property="bild" /><br />
+
+<label for="administrator">
+	<f:translate key="tx_zweiradspion_domain_model_fahrrad.administrator" />
+</label><br />
+<f:form.textbox property="administrator" disabled="true" /><br />

@@ -1,0 +1,23 @@
+<f:layout name="Default" />
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+    <div class="fahrradSingle" >
+        <h1>Single View for Fahrrad</h1>
+
+        <f:flashMessages />
+        <f:render partial="Fahrrad/Properties" arguments="{fahrrad:fahrrad}" />
+        <f:link.action action="list" class="txtLnk">Back to list</f:link.action><br />
+        <f:link.action action="new" class="txtLnk">New Fahrrad</f:link.action>
+    </div>
+</f:section>

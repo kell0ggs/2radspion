@@ -1,0 +1,40 @@
+{namespace zweirad=Tx_Zweiradspion_ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="main">
+    <h1>Listing for Fahrrad</h1>
+
+    <f:flashMessages />
+
+
+
+    <f:for each="{fahrrads}" as="fahrrad">
+        <div class="bikeListElement">
+            <zweirad:hasImage img="{fahrrad.bild}">
+                <f:then>
+                    <f:link.action action="show" arguments="{fahrrad : fahrrad}" class="thumb">
+                        <f:image src="uploads/tx_zweiradspion/{fahrrad.bild}" width="125" alt="" />
+                    </f:link.action>
+                </f:then>
+            </zweirad:hasImage>
+            <div class="cnt">
+                {fahrrad.hersteller}<br>
+                {fahrrad.name}<br>
+                {fahrrad.preis}<br>
+                {fahrrad.bildk.}<br>
+                {fahrrad.administrator}<br>
+            </div>
+            <div class="links">
+                <zweirad:security.ifAuthenticated person="{fahrrad.administrator}">
+                    <f:link.action action="edit" arguments="{fahrrad : fahrrad}" class="txtLnk">Bearbeiten</f:link.action><br>
+                    <f:link.action action="delete" arguments="{fahrrad : fahrrad}" class="txtLnk">Löschen</f:link.action><br>
+                </zweirad:security.ifAuthenticated>
+                <f:link.action action="show" arguments="{fahrrad : fahrrad}" class="txtLnk">Ansehen</f:link.action>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </f:for>
+    <zweirad:security.ifLoggedIn>
+        <f:link.action action="new" class="txtLnk">New Fahrrad</f:link.action>
+    </zweirad:security.ifLoggedIn>
+</f:section>

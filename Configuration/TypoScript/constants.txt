@@ -1,0 +1,14 @@
+plugin.tx_zweiradspion {
+	view {
+		# cat=plugin.tx_zweiradspion/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:zweiradspion/Resources/Private/Templates/
+		# cat=plugin.tx_zweiradspion/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:zweiradspion/Resources/Private/Partials/
+		# cat=plugin.tx_zweiradspion/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:zweiradspion/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_zweiradspion//a; type=int+; label=Default storage PID
+		storagePid = 
+	}
+}

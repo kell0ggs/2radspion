@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the 2radspion extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_zweiradspion_domain_model_fahrrad">Fahrrad</label>
+			<label index="tx_zweiradspion_domain_model_fahrrad.hersteller">hersteller</label>
+			<label index="tx_zweiradspion_domain_model_fahrrad.name">name</label>
+			<label index="tx_zweiradspion_domain_model_fahrrad.preis">preis</label>
+			<label index="tx_zweiradspion_domain_model_fahrrad.bild">bild</label>
+			<label index="tx_zweiradspion_domain_model_fahrrad.administrator">administrator</label>
+		</languageKey>
+	</data>
+</T3locallang>

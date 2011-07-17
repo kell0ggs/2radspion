@@ -1,0 +1,12 @@
+{namespace zweirad=Tx_Zweiradspion_ViewHelpers}
+
+<div>{fahrrad.hersteller}</div>
+<div>{fahrrad.name}</div>
+<div>{fahrrad.preis}</div>
+<div>{fahrrad.bild}</div>
+<zweirad:hasImage img="{fahrrad.bild}">
+    <f:then>
+        <f:image src="uploads/tx_zweiradspion/{fahrrad.bild}" width="510" alt="{fahrrad.name}" />
+    </f:then>
+</zweirad:hasImage>
+<div>{fahrrad.administrator}</div>

@@ -1,0 +1,30 @@
+plugin.tx_zweiradspion {
+	view {
+		templateRootPath = {$plugin.tx_zweiradspion.view.templateRootPath}
+		partialRootPath = {$plugin.tx_zweiradspion.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_zweiradspion.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_zweiradspion.persistence.storagePid}
+	}
+}
+
+plugin.tx_zweiradspion._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-zweiradspion table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-zweiradspion table th {
+		font-weight:bold;
+	}
+
+	.tx-zweiradspion table td {
+		vertical-align:top;
+	}
+)
