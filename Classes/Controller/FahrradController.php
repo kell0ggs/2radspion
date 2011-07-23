@@ -109,15 +109,27 @@
 	 * @return void
 	 */
 	public function contactAction(Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad) {
-		            #$administrator = $fahrrad->getAdministrator();
-		            #$administrator = t3lib_div::makeInstance('Tx_Zweiradspion_Domain_Model_Administrator');
-		            #$email = $administrator->getEmail();
-#$email = $GLOBALS['TSFE']->fe_user->user[6]
-		            $email = $this->userRepository->findByUid((int)6)->getEmail();
-		            
-		            #$this->accessControllService->getFrontendUserUid($administrator)->
-		            $this->view->assign('adminid', $fahrrad->getAdministratorId());
-		            $this->view->assign('email', $email);
+                $email = $this->userRepository->findByUid((int)$fahrrad->getAdministratorId())->getEmail();
+
+
+                require_once(t3lib_extMgm::extPath("formhandler")."pi1/class.tx_formhandler_pi1.php");
+                $tx_formhandler_pi1 = new tx_formhandler_pi1();
+                $tx_formhandler_pi1->cObj = t3lib_div::makeInstance('tslib_cObj');
+                $tx_formhandler_pi1->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['Tx_Formhandler.'];
+                #plugin.Tx_Formhandler.settings.predef.default
+                #$tx_formhandler_pi1->conf['settings.']['predef.']['default.']['masterTemplateFile'] = "fileadmin/formhandler/template.html";
+
+                $form = $tx_formhandler_pi1->main ($this->content, $tx_formhandler_pi1->conf);
+
+                #$conf['formhandler.']['settings.']['finishers.']['1.']['config.']['admin.']['to_email'] = 'asdf@...';
+
+                #$form = $tx_formhandler_pi1->cObj->cObjGetSingle($conf['formhandler'],$conf['formhandler.']);
+
+
+                $this->view->assign('adminid', $fahrrad->getAdministratorId());
+                $this->view->assign('email', $email);
+                $this->view->assign('form', $form);
+
 	}
 
 	/**
