@@ -7,11 +7,11 @@
 	</meta>
 	<data type="array">
 	<languageKey index="default" type="array">
-			<label index="hersteller.description">hersteller</label>
-			<label index="name.description">name</label>
-			<label index="preis.description">preis</label>
-			<label index="bild.description">bild</label>
-			<label index="administrator.description">administrator</label>
+			<label index="hersteller.description"><k:format.htmlSpecialChars>hersteller</k:format.htmlSpecialChars></label>
+			<label index="name.description"><k:format.htmlSpecialChars>name</k:format.htmlSpecialChars></label>
+			<label index="preis.description"><k:format.htmlSpecialChars>preis</k:format.htmlSpecialChars></label>
+			<label index="bild.description"><k:format.htmlSpecialChars>bild</k:format.htmlSpecialChars></label>
+			<label index="administrator_id.description"><k:format.htmlSpecialChars>administratorId</k:format.htmlSpecialChars></label>
 		</languageKey>
 	</data>
 </T3locallang>

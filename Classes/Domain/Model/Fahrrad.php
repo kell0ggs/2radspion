@@ -26,7 +26,7 @@
 /**
  * Fahrrad
  */
-class Tx_Zweiradspion_Domain_Model_Fahrrad extends Tx_Extbase_DomainObject_AbstractEntity {
+ class Tx_Zweiradspion_Domain_Model_Fahrrad extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * hersteller
@@ -60,10 +60,16 @@ class Tx_Zweiradspion_Domain_Model_Fahrrad extends Tx_Extbase_DomainObject_Abstr
 	protected $bild;
 
 	/**
-	 * administrator
+	 * administratorId
 	 *
-	 * @var integer
+	 * @var integer $administratorId
 	 */
+	protected $administratorId;
+
+	/**
+	 * @var Tx_Zweiradspion_Domain_Model_Administrator The administrator of the organization.
+	 * @lazy
+	 **/
 	protected $administrator;
 
 	/**
@@ -152,22 +158,22 @@ class Tx_Zweiradspion_Domain_Model_Fahrrad extends Tx_Extbase_DomainObject_Abstr
 	}
 
 	/**
-	 * Returns the administrator
+	 * Returns the administratorId
 	 *
-	 * @return integer $administrator
+	 * @return integer $administratorIdId
 	 */
-	public function getAdministrator() {
-		return $this->administrator;
+	public function getAdministratorId() {
+		return $this->administratorId;
 	}
 
 	/**
-	 * Sets the administrator
+	 * Sets the administratorId
 	 *
-	 * @param integer $administrator
+	 * @param integer $administratorIdId
 	 * @return void
 	 */
-	public function setAdministrator($administrator) {
-		$this->administrator = $administrator;
+	public function setAdministratorId($administratorId) {
+		$this->administratorId = $administratorId;
 	}
 
 }

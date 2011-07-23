@@ -24,7 +24,7 @@
 ***************************************************************/
 
 /**
- * Test case for class Tx_Zweiradspion_Domain_Model_Fahrrad.
+ * Testcase for class Tx_Zweiradspion_Domain_Model_Fahrrad.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -125,22 +125,22 @@ class Tx_Zweiradspion_Domain_Model_FahrradTest extends Tx_Extbase_Tests_Unit_Bas
 	/**
 	 * @test
 	 */
-	public function getAdministratorReturnsInitialValueForInteger() { 
+	public function getAdministratorIdReturnsInitialValueForInteger() { 
 		$this->assertSame(
 			0,
-			$this->fixture->getAdministrator()
+			$this->fixture->getAdministratorId()
 		);
 	}
 
 	/**
 	 * @test
 	 */
-	public function setAdministratorForIntegerSetsAdministrator() { 
-		$this->fixture->setAdministrator(12);
+	public function setAdministratorIdForIntegerSetsAdministratorId() { 
+		$this->fixture->setAdministratorId(12);
 
 		$this->assertSame(
 			12,
-			$this->fixture->getAdministrator()
+			$this->fixture->getAdministratorId()
 		);
 	}
 	

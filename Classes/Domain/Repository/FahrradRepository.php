@@ -26,7 +26,7 @@
 /**
  * Repository for Tx_Zweiradspion_Domain_Model_Fahrrad
  */
-class Tx_Zweiradspion_Domain_Repository_FahrradRepository extends Tx_Extbase_Persistence_Repository {
+ class Tx_Zweiradspion_Domain_Repository_FahrradRepository extends Tx_Extbase_Persistence_Repository {
 
 }
 ?>

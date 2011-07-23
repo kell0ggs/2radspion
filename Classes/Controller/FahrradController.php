@@ -26,7 +26,7 @@
 /**
  * Controller for the Fahrrad object
  */
-class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Controller_ActionController {
+ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
 	 * fahrradRepository
@@ -43,6 +43,11 @@ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Contro
 	protected $accessControllService;
 
 	/**
+	 * @var Tx_Extbase_Domain_Repository_FrontendUserRepository
+	 */
+	protected $userRepository;
+
+        /**
 	 * injectFahrradRepository
 	 *
 	 * @param Tx_Zweiradspion_Domain_Repository_FahrradRepository $fahrradRepository
@@ -53,6 +58,16 @@ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Contro
 	}
 
 	/**
+	 * Initializes the current action
+	 *
+         * @param Tx_Extbase_Domain_Repository_FrontendUserRepository $userRepository
+	 * @return void
+	 */
+	public function injectUserRepository(Tx_Extbase_Domain_Repository_FrontendUserRepository $userRepository) {
+		$this->userRepository = $userRepository;
+	}
+
+        /**
 	 * injectAccessControlService
 	 *
 	 * @param Tx_Zweiradspion_Service_AccessControlService $accessControllService
@@ -61,6 +76,7 @@ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Contro
 	public function injectAccessControlService(Tx_Zweiradspion_Service_AccessControlService $accessControllService) {
 		$this->accessControllService = $accessControllService;
 	}
+
 
 	/**
 	 * Displays all Fahrrads
@@ -87,13 +103,31 @@ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Contro
 	}
 
 	/**
+	 * Contacts the owner of the bike
+	 *
+	 * @param Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad the Fahrrad to display
+	 * @return void
+	 */
+	public function contactAction(Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad) {
+		            #$administrator = $fahrrad->getAdministrator();
+		            #$administrator = t3lib_div::makeInstance('Tx_Zweiradspion_Domain_Model_Administrator');
+		            #$email = $administrator->getEmail();
+#$email = $GLOBALS['TSFE']->fe_user->user[6]
+		            $email = $this->userRepository->findByUid((int)6)->getEmail();
+		            
+		            #$this->accessControllService->getFrontendUserUid($administrator)->
+		            $this->view->assign('adminid', $fahrrad->getAdministratorId());
+		            $this->view->assign('email', $email);
+	}
+
+	/**
 	 * Displays a form for creating a new  Fahrrad
 	 *
 	 * @param Tx_Zweiradspion_Domain_Model_Fahrrad $newFahrrad a fresh Fahrrad object which has not yet been added to the repository
 	 * @return void
 	 * @dontvalidate $newFahrrad
 	 */
-	public function newAction(Tx_Zweiradspion_Domain_Model_Fahrrad $newFahrrad = NULL) {
+	public function newAction(Tx_Zweiradspion_Domain_Model_Fahrrad $newFahrrad = null) {
 		
 		$this->view->assign('newFahrrad', $newFahrrad);
 	}
@@ -105,29 +139,29 @@ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Contro
 	 * @return void
 	 */
 	public function createAction(Tx_Zweiradspion_Domain_Model_Fahrrad $newFahrrad) {
-                $newFahrrad->setAdministrator($this->accessControllService->getFrontendUserUid());
+		                $newFahrrad->setAdministrator($this->accessControllService->getFrontendUserUid());
+				
+				#if(!empty($_FILES)){
+				#	$this->flashMessageContainer->add('File upload is not yet supported by the Persistence Manager. You have to implement it yourself.');
+				#}
+				if ($_FILES['tx_zweiradspion_zweiradspion']) {
+					$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+					$fileName = $basicFileFunctions->getUniqueName(
+						$_FILES['tx_zweiradspion_zweiradspion']['name']['newFahrrad']['bild'],
+						t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
+		 
+					t3lib_div::upload_copy_move(
+		                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['newFahrrad']['bild'],
+		                                $fileName);
+		 			
 		
-		#if(!empty($_FILES)){
-		#	$this->flashMessageContainer->add('File upload is not yet supported by the Persistence Manager. You have to implement it yourself.');
-		#}
-		if ($_FILES['tx_zweiradspion_zweiradspion']) {
-			$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
-			$fileName = $basicFileFunctions->getUniqueName(
-				$_FILES['tx_zweiradspion_zweiradspion']['name']['newFahrrad']['bild'],
-				t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
- 
-			t3lib_div::upload_copy_move(
-                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['newFahrrad']['bild'],
-                                $fileName);
- 			
-
-			$newFahrrad->setBild(basename($fileName));
-			 
-		}		
-		
-		$this->fahrradRepository->add($newFahrrad);
-		$this->flashMessageContainer->add('Your new Fahrrad was created.');
-		$this->redirect('list');
+					$newFahrrad->setBild(basename($fileName));
+					 
+				}		
+				
+				$this->fahrradRepository->add($newFahrrad);
+				$this->flashMessageContainer->add('Your new Fahrrad was created.');
+				$this->redirect('list');
 	}
 
 	/**
@@ -147,26 +181,26 @@ class Tx_Zweiradspion_Controller_FahrradController extends Tx_Extbase_MVC_Contro
 	 * @return
 	 */
 	public function updateAction(Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad) {
-            $bildTemp = $fahrrad->getBild();
-            #return '<pre>'.print_r($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']).'</pre>';
-		if ($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']) {
-			$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
-			$fileName = $basicFileFunctions->getUniqueName(
-				$_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild'],
-				t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
-			t3lib_div::upload_copy_move(
-                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['fahrrad']['bild'],
-                                $fileName);
-
-
-			$fahrrad->setBild(basename($fileName));
-
-		}  else {
-                    $fahrrad->setBild($bildTemp);
-                }
-		$this->fahrradRepository->update($fahrrad);
-		$this->flashMessageContainer->add('Your Fahrrad was updated.');
-		$this->redirect('list');
+		            $bildTemp = $fahrrad->getBild();
+		            #return '<pre>'.print_r($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']).'</pre>';
+				if ($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']) {
+					$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+					$fileName = $basicFileFunctions->getUniqueName(
+						$_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild'],
+						t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
+					t3lib_div::upload_copy_move(
+		                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['fahrrad']['bild'],
+		                                $fileName);
+		
+		
+					$fahrrad->setBild(basename($fileName));
+		
+				}  else {
+		                    $fahrrad->setBild($bildTemp);
+		                }
+				$this->fahrradRepository->update($fahrrad);
+				$this->flashMessageContainer->add('Your Fahrrad was updated.');
+				$this->redirect('list');
 	}
 
 	/**

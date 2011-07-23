@@ -7,7 +7,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Zweiradspion',
 	array(
-		'Fahrrad' => 'list, show, new, create, edit, update, delete',
+		'Fahrrad' => 'list, show, new, create, edit, update, delete, contact',
 		
 	),
 	array(

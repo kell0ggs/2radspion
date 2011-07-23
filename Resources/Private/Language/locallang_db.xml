@@ -11,7 +11,7 @@
 			<label index="tx_zweiradspion_domain_model_fahrrad.name">Name</label>
 			<label index="tx_zweiradspion_domain_model_fahrrad.preis">Preis</label>
 			<label index="tx_zweiradspion_domain_model_fahrrad.bild">Bild</label>
-			<label index="tx_zweiradspion_domain_model_fahrrad.administrator">Administrator</label>
+			<label index="tx_zweiradspion_domain_model_fahrrad.administrator_id">Administrator Id</label>
 		</languageKey>
 	</data>
 </T3locallang>
