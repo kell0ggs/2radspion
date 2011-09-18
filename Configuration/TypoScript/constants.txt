@@ -11,4 +11,5 @@ plugin.tx_zweiradspion {
 		# cat=plugin.tx_zweiradspion//a; type=int+; label=Default storage PID
 		storagePid = 
 	}
+        contactPid =
 }

@@ -26,7 +26,7 @@
 /**
  * Fahrrad
  */
- class Tx_Zweiradspion_Domain_Model_Fahrrad extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Zweiradspion_Domain_Model_Fahrrad extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * hersteller

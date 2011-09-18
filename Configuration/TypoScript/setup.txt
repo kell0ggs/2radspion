@@ -7,6 +7,7 @@ plugin.tx_zweiradspion {
 	persistence {
 		storagePid = {$plugin.tx_zweiradspion.persistence.storagePid}
 	}
+        contactPid = {$plugin.tx_zweiradspion.contactPid}
 }
 
 plugin.tx_zweiradspion._CSS_DEFAULT_STYLE (

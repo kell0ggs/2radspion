@@ -99,37 +99,9 @@
 	 * @return string The rendered view
 	 */
 	public function showAction(Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad) {
-		$this->view->assign('fahrrad', $fahrrad);
-	}
-
-	/**
-	 * Contacts the owner of the bike
-	 *
-	 * @param Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad the Fahrrad to display
-	 * @return void
-	 */
-	public function contactAction(Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad) {
-                $email = $this->userRepository->findByUid((int)$fahrrad->getAdministratorId())->getEmail();
-
-
-                require_once(t3lib_extMgm::extPath("formhandler")."pi1/class.tx_formhandler_pi1.php");
-                $tx_formhandler_pi1 = new tx_formhandler_pi1();
-                $tx_formhandler_pi1->cObj = t3lib_div::makeInstance('tslib_cObj');
-                $tx_formhandler_pi1->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['Tx_Formhandler.'];
-                #plugin.Tx_Formhandler.settings.predef.default
-                #$tx_formhandler_pi1->conf['settings.']['predef.']['default.']['masterTemplateFile'] = "fileadmin/formhandler/template.html";
-
-                $form = $tx_formhandler_pi1->main ($this->content, $tx_formhandler_pi1->conf);
-
-                #$conf['formhandler.']['settings.']['finishers.']['1.']['config.']['admin.']['to_email'] = 'asdf@...';
-
-                #$form = $tx_formhandler_pi1->cObj->cObjGetSingle($conf['formhandler'],$conf['formhandler.']);
-
-
-                $this->view->assign('adminid', $fahrrad->getAdministratorId());
-                $this->view->assign('email', $email);
-                $this->view->assign('form', $form);
-
+            $configuration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->view->assign('contactPid', $configuration['contactPid']);
+            $this->view->assign('fahrrad', $fahrrad);
 	}
 
 	/**
@@ -151,29 +123,29 @@
 	 * @return void
 	 */
 	public function createAction(Tx_Zweiradspion_Domain_Model_Fahrrad $newFahrrad) {
-		                $newFahrrad->setAdministrator($this->accessControllService->getFrontendUserUid());
-				
-				#if(!empty($_FILES)){
-				#	$this->flashMessageContainer->add('File upload is not yet supported by the Persistence Manager. You have to implement it yourself.');
-				#}
-				if ($_FILES['tx_zweiradspion_zweiradspion']) {
-					$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
-					$fileName = $basicFileFunctions->getUniqueName(
-						$_FILES['tx_zweiradspion_zweiradspion']['name']['newFahrrad']['bild'],
-						t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
-		 
-					t3lib_div::upload_copy_move(
-		                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['newFahrrad']['bild'],
-		                                $fileName);
-		 			
+                $newFahrrad->setAdministrator($this->accessControllService->getFrontendUserUid());
 		
-					$newFahrrad->setBild(basename($fileName));
-					 
-				}		
-				
-				$this->fahrradRepository->add($newFahrrad);
-				$this->flashMessageContainer->add('Your new Fahrrad was created.');
-				$this->redirect('list');
+		#if(!empty($_FILES)){
+		#	$this->flashMessageContainer->add('File upload is not yet supported by the Persistence Manager. You have to implement it yourself.');
+		#}
+		if ($_FILES['tx_zweiradspion_zweiradspion']) {
+			$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+			$fileName = $basicFileFunctions->getUniqueName(
+				$_FILES['tx_zweiradspion_zweiradspion']['name']['newFahrrad']['bild'],
+				t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
+ 
+			t3lib_div::upload_copy_move(
+                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['newFahrrad']['bild'],
+                                $fileName);
+ 			
+
+			$newFahrrad->setBild(basename($fileName));
+			 
+		}		
+		
+		$this->fahrradRepository->add($newFahrrad);
+		$this->flashMessageContainer->add('Your new Fahrrad was created.');
+		$this->redirect('list');
 	}
 
 	/**
@@ -193,26 +165,26 @@
 	 * @return
 	 */
 	public function updateAction(Tx_Zweiradspion_Domain_Model_Fahrrad $fahrrad) {
-		            $bildTemp = $fahrrad->getBild();
-		            #return '<pre>'.print_r($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']).'</pre>';
-				if ($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']) {
-					$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
-					$fileName = $basicFileFunctions->getUniqueName(
-						$_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild'],
-						t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
-					t3lib_div::upload_copy_move(
-		                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['fahrrad']['bild'],
-		                                $fileName);
-		
-		
-					$fahrrad->setBild(basename($fileName));
-		
-				}  else {
-		                    $fahrrad->setBild($bildTemp);
-		                }
-				$this->fahrradRepository->update($fahrrad);
-				$this->flashMessageContainer->add('Your Fahrrad was updated.');
-				$this->redirect('list');
+            $bildTemp = $fahrrad->getBild();
+            #return '<pre>'.print_r($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']).'</pre>';
+		if ($_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild']) {
+			$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+			$fileName = $basicFileFunctions->getUniqueName(
+				$_FILES['tx_zweiradspion_zweiradspion']['name']['fahrrad']['bild'],
+				t3lib_div::getFileAbsFileName('uploads/tx_zweiradspion/'));
+			t3lib_div::upload_copy_move(
+                                $_FILES['tx_zweiradspion_zweiradspion']['tmp_name']['fahrrad']['bild'],
+                                $fileName);
+
+
+			$fahrrad->setBild(basename($fileName));
+
+		}  else {
+                    $fahrrad->setBild($bildTemp);
+                }
+		$this->fahrradRepository->update($fahrrad);
+		$this->flashMessageContainer->add('Your Fahrrad was updated.');
+		$this->redirect('list');
 	}
 
 	/**

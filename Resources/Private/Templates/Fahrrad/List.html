@@ -21,11 +21,11 @@
                 {fahrrad.hersteller}<br>
                 {fahrrad.name}<br>
                 {fahrrad.preis}<br>
-                {fahrrad.bildk.}<br>
-                {fahrrad.administrator}<br>
+                {fahrrad.bild}<br>
+                {fahrrad.administratorId}<br>
             </div>
             <div class="links">
-                <zweirad:security.ifAuthenticated person="{fahrrad.administrator}">
+                <zweirad:security.ifAuthenticated person="{fahrrad.administratorId}">ifAuthenticated = true<br>
                     <f:link.action action="edit" arguments="{fahrrad : fahrrad}" class="txtLnk">Bearbeiten</f:link.action><br>
                     <f:link.action action="delete" arguments="{fahrrad : fahrrad}" class="txtLnk">Löschen</f:link.action><br>
                 </zweirad:security.ifAuthenticated>
